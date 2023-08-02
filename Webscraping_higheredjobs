@@ -1,0 +1,18 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.higheredjobs.com/search/advanced.cfm?Keyword="
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+response = requests.Session().get(url, headers = headers)
+soup = BeautifulSoup(response.content, "html.parser")
+
+# Find all the options in the dropdown menu
+options = soup.find_all("option")
+#print(options)
+
+# Extract the numerical identifier from each option and store in a list
+identifiers = {option.text:option["value"] for option in options}
+
+
+# Print the list of identifiers
+print(identifiers)
